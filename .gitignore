@@ -1,0 +1,16 @@
+node_modules/
+.DS_Store
+*.local
+.env
+.env.local
+dist/
+build/
+_research/
+drive/
+*.jpg
+*.png
+!_site/**/*.png
+!_site/**/*.jpg
+audit.jsonl
+brand.json
+site.json
