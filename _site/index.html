@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <title>Ghost Systems - Strategic Business Consulting</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #2a2a2a;
+            background: #ffffff;
+        }
+
+        .sans {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* TOP BAR */
+        .topbar {
+            background: #0f1e30;
+            color: #a0b4c8;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.8rem;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .topbar a {
+            color: #a0b4c8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .topbar a:hover {
+            color: #d4a84b;
+        }
+
+        /* HEADER */
+        header {
+            background: #1e3a5f;
+            color: white;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo img {
+            height: 42px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+
+        nav {
+            display: flex;
+            gap: 2.5rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #d4a84b;
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: #d4a84b;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .topbar { display: none; }
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+                position: relative;
+            }
+            nav { gap: 1.5rem; }
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #0f1e30 0%, #1e3a5f 40%, #2d5a8c 100%);
+            color: white;
+            padding: 8rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 40px,
+                rgba(255,255,255,0.015) 40px,
+                rgba(255,255,255,0.015) 80px
+            );
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-tagline {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #d4a84b;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.15;
+            font-weight: 400;
+        }
+
+        .hero h1 strong {
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: #d4a84b;
+            color: #0f1e30;
+            padding: 1rem 2.5rem;
+            border-radius: 3px;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            border: 2px solid #d4a84b;
+        }
+
+        .btn-primary:hover {
+            background: #e0b85c;
+            border-color: #e0b85c;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(212,168,75,0.3);
+        }
+
+        .btn-outline {
+            display: inline-block;
+            background: transparent;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 3px;
+            text-decoration: none;
+            font-weight: 600;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            border: 2px solid rgba(255,255,255,0.4);
+        }
+
+        .btn-outline:hover {
+            border-color: white;
+            background: rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 5rem 1.5rem; }
+            .hero h1 { font-size: 2.2rem; }
+        }
+
+        /* STATS BAR */
+        .stats-bar {
+            background: #f7f5f0;
+            border-top: 1px solid #e8e4dc;
+            border-bottom: 1px solid #e8e4dc;
+            padding: 3rem 2rem;
+        }
+
+        .stats-grid {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #1e3a5f;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #777;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* SECTIONS */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            color: #1e3a5f;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .section-header h2 strong {
+            font-weight: 700;
+        }
+
+        .section-header p {
+            color: #777;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .gold-line {
+            width: 60px;
+            height: 3px;
+            background: #d4a84b;
+            margin: 1rem auto 0;
+        }
+
+        /* WHY US CARDS */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .why-card {
+            padding: 2.5rem 2rem;
+            background: white;
+            border: 1px solid #e8e4dc;
+            border-radius: 4px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .why-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(30, 58, 95, 0.12);
+            border-color: #d4a84b;
+        }
+
+        .why-card .icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1e3a5f, #2d5a8c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            color: white;
+        }
+
+        .why-card h3 {
+            color: #1e3a5f;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 600;
+        }
+
+        .why-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .why-grid { grid-template-columns: 1fr; }
+        }
+
+        /* PROCESS SECTION */
+        .process-bg {
+            background: #f7f5f0;
+            padding: 5rem 2rem;
+        }
+
+        .process-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            margin-top: 3rem;
+            position: relative;
+        }
+
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 32px;
+            left: 12.5%;
+            right: 12.5%;
+            height: 2px;
+            background: #d4a84b;
+        }
+
+        .step {
+            text-align: center;
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .step-num {
+            width: 64px;
+            height: 64px;
+            background: #1e3a5f;
+            color: #d4a84b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            border: 3px solid #d4a84b;
+        }
+
+        .step h4 {
+            color: #1e3a5f;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .step p {
+            color: #777;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .process-steps {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .process-steps::before { display: none; }
+        }
+
+        /* SERVICES PREVIEW */
+        .services-preview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .service-card {
+            padding: 2.5rem 2rem;
+            background: white;
+            border: 1px solid #e8e4dc;
+            border-radius: 4px;
+            border-top: 4px solid #1e3a5f;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(30, 58, 95, 0.12);
+            border-top-color: #d4a84b;
+        }
+
+        .service-card h3 {
+            color: #1e3a5f;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card a {
+            color: #d4a84b;
+            text-decoration: none;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .service-card a:hover {
+            color: #1e3a5f;
+        }
+
+        @media (max-width: 768px) {
+            .services-preview { grid-template-columns: 1fr; }
+        }
+
+        /* CONTACT */
+        .contact-section {
+            background: #f7f5f0;
+            padding: 5rem 2rem;
+        }
+
+        .contact-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info h2 {
+            font-size: 2rem;
+            color: #1e3a5f;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .contact-detail .detail-icon {
+            width: 40px;
+            height: 40px;
+            background: #1e3a5f;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4a84b;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .contact-detail .detail-text {
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .contact-detail a {
+            color: #1e3a5f;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-detail a:hover {
+            color: #d4a84b;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 4px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            border: 1px solid #e8e4dc;
+        }
+
+        .contact-form h3 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #1e3a5f;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: #555;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 1rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            transition: border-color 0.3s;
+            background: #fafafa;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #d4a84b;
+            background: white;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #1e3a5f;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #2d5a8c;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(30, 58, 95, 0.25);
+        }
+
+        @media (max-width: 768px) {
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #0f1e30;
+            color: #a0b4c8;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer h4 {
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer p {
+            line-height: 1.8;
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #a0b4c8;
+            text-decoration: none;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #d4a84b;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+
+        /* FADE IN ANIMATION */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar sans">
+        <a href="tel:(833) 364-1777">(833) 364-1777</a>
+        <a href="mailto:info@elitebusinessbro.com">info@elitebusinessbro.com</a>
+        <span>1008 S St. Ste C, Sacramento CA 95811</span>
+    </div>
+
+    <header>
+        <a href="index.html" class="logo"><img src="assets/logo.png" alt="Ghost Systems logo">Ghost Systems</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-tagline">Strategic Business Consulting</div>
+            <h1><strong>Safe</strong> Doing Business<br>With Us</h1>
+            <p>Strategic consulting built on trust, expertise, and proven results. We help organizations navigate complexity and achieve sustainable growth.</p>
+            <div class="btn-group">
+                <a href="#contact" class="btn-primary">Start a Conversation</a>
+                <a href="services.html" class="btn-outline">Our Services</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-bar">
+        <div class="stats-grid">
+            <div class="fade-in">
+                <div class="stat-number">10+</div>
+                <div class="stat-label sans">Years in Business</div>
+            </div>
+            <div class="fade-in">
+                <div class="stat-number">50+</div>
+                <div class="stat-label sans">Organizations Served</div>
+            </div>
+            <div class="fade-in">
+                <div class="stat-number">90%</div>
+                <div class="stat-label sans">Client Retention</div>
+            </div>
+            <div class="fade-in">
+                <div class="stat-number">100+</div>
+                <div class="stat-label sans">Projects Delivered</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header fade-in">
+            <h2>Why <strong>Ghost Systems</strong></h2>
+            <p>We bring experience, clear thinking, and a genuine commitment to your success.</p>
+            <div class="gold-line"></div>
+        </div>
+        <div class="why-grid">
+            <div class="why-card fade-in">
+                <div class="icon">&#9670;</div>
+                <h3>Proven Track Record</h3>
+                <p>A decade of experience across industries. We deliver sustainable strategies that leadership teams can rely on.</p>
+            </div>
+            <div class="why-card fade-in">
+                <div class="icon">&#9678;</div>
+                <h3>Clear Thinking</h3>
+                <p>No jargon, no shortcuts. We listen carefully, ask tough questions, and provide honest analysis that cuts through noise.</p>
+            </div>
+            <div class="why-card fade-in">
+                <div class="icon">&#9733;</div>
+                <h3>Partnership Approach</h3>
+                <p>We work alongside your team, not separate from it. Your success is our success. We're invested in long-term impact.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="process-bg">
+        <div class="process-content">
+            <div class="section-header fade-in">
+                <h2>Our <strong>Process</strong></h2>
+                <p>A proven approach that creates clarity and delivers real results.</p>
+                <div class="gold-line"></div>
+            </div>
+            <div class="process-steps">
+                <div class="step fade-in">
+                    <div class="step-num">1</div>
+                    <h4>Discovery</h4>
+                    <p>We listen. We learn your business, your challenges, and your goals from the inside out.</p>
+                </div>
+                <div class="step fade-in">
+                    <div class="step-num">2</div>
+                    <h4>Analysis</h4>
+                    <p>We assess your landscape, capabilities, and strategic options with clear-eyed objectivity.</p>
+                </div>
+                <div class="step fade-in">
+                    <div class="step-num">3</div>
+                    <h4>Strategy</h4>
+                    <p>We build actionable roadmaps together, grounded in reality and aligned with your vision.</p>
+                </div>
+                <div class="step fade-in">
+                    <div class="step-num">4</div>
+                    <h4>Execution</h4>
+                    <p>We stay engaged through implementation, adjusting as needed to ensure lasting results.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-header fade-in">
+            <h2>What We <strong>Do</strong></h2>
+            <p>Strategic services designed to help organizations reach their full potential.</p>
+            <div class="gold-line"></div>
+        </div>
+        <div class="services-preview">
+            <div class="service-card fade-in">
+                <h3>Strategic Planning</h3>
+                <p>Develop clarity on direction. We help leadership teams align on priorities and build executable roadmaps.</p>
+                <a href="services.html">Learn More &#8594;</a>
+            </div>
+            <div class="service-card fade-in">
+                <h3>Organizational Development</h3>
+                <p>Build capability. We strengthen your team, improve processes, and create conditions for sustained performance.</p>
+                <a href="services.html">Learn More &#8594;</a>
+            </div>
+            <div class="service-card fade-in">
+                <h3>Change Management</h3>
+                <p>Navigate transitions safely. We guide organizations through complexity with stability and clarity.</p>
+                <a href="services.html">Learn More &#8594;</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-section" id="contact">
+        <div class="contact-wrapper">
+            <div class="contact-info fade-in">
+                <h2>Ready to Explore Partnership?</h2>
+                <p>Let's talk about your challenges and opportunities. We'll listen, ask good questions, and share our honest perspective. No pressure, no sales pitch.</p>
+                <div class="contact-detail">
+                    <div class="detail-icon">&#9990;</div>
+                    <div class="detail-text"><a href="tel:(833) 364-1777">(833) 364-1777</a></div>
+                </div>
+                <div class="contact-detail">
+                    <div class="detail-icon">&#9993;</div>
+                    <div class="detail-text"><a href="mailto:info@elitebusinessbro.com">info@elitebusinessbro.com</a></div>
+                </div>
+                <div class="contact-detail">
+                    <div class="detail-icon">&#10145;</div>
+                    <div class="detail-text">1008 S St. Ste C<br>Sacramento CA 95811</div>
+                </div>
+                <div class="contact-detail">
+                    <div class="detail-icon">&#9679;</div>
+                    <div class="detail-text">Established 2015</div>
+                </div>
+            </div>
+            <div class="contact-form fade-in">
+                <h3>Send a Message</h3>
+                <form action="https://formsubmit.co/info@elitebusinessbro.com" method="POST">
+                    <input type="hidden" name="_subject" value="New inquiry from Ghost Systems website">
+                    <input type="hidden" name="_next" value="thanks.html">
+                    <input type="text" name="_honey" style="display:none">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="org">Organization</label>
+                        <input type="text" id="org" name="organization">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">How Can We Help?</label>
+                        <textarea id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer sans">
+        <div class="footer-grid">
+            <div>
+                <h4>Ghost Systems</h4>
+                <p>Strategic business consulting built on trust, expertise, and a decade of proven results. We help organizations navigate complexity with confidence.</p>
+            </div>
+            <div>
+                <h4>Navigation</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="tel:(833) 364-1777">(833) 364-1777</a></li>
+                    <li><a href="mailto:info@elitebusinessbro.com">info@elitebusinessbro.com</a></li>
+                    <li>1008 S St. Ste C<br>Sacramento CA 95811</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Ghost Systems. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var els = document.querySelectorAll('.fade-in');
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.15 });
+            els.forEach(function (el) { observer.observe(el); });
+        });
+    </script>
+
+</body>
+</html>
